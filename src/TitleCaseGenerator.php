@@ -6,18 +6,27 @@
         {
             $input_array_of_words = explode(" ", $input_title);
             $output_titlecased = array();
-            $articles = ["for", "and", "nor", "but", "or", "yet", "so", "at", "but", "by", "of", "to"];
+            $articles = ["the", "for", "and", "from", "but", "or", "yet", "so", "at", "but", "by", "to", "of", "nor", "on"];
+            $counter = 0;
+
             foreach ($input_array_of_words as $word) {
-                $word = strtolower($word);
+                $lowered_word = strtolower($word);
                 foreach ($articles as $article) {
-                    if ($word !== $article) {
-                        $cased_word = ucfirst($word);
+                    if ($counter == 0) {
+                        $cased_word = ucfirst($lowered_word);
                     }
-                    elseif ($word == $article) {
-                        $cased_word = $word;
+                    else if ($counter !== 0) {
+                        if ($lowered_word === $article) {
+                            $cased_word = $lowered_word;
+                            break;
+                        }
+                        else {
+                            $cased_word = ucfirst($lowered_word);
+                        }
                     }
                 }
                 array_push($output_titlecased, $cased_word);
+                $counter++;
             }
             return implode(" ", $output_titlecased);
         }
